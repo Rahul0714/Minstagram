@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:minstagram/screens/profile_screen.dart';
 import 'package:minstagram/utils/colors.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -55,18 +56,30 @@ class _SearchScreenState extends State<SearchScreen> {
                 return ListView.builder(
                     itemCount: (snapshot.data! as dynamic).docs.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            (snapshot.data! as dynamic).docs[index]['photoUrl'],
+                      return InkWell(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              uid: (snapshot.data! as dynamic).docs[index]
+                                  ['uid'],
+                            ),
                           ),
                         ),
-                        title: Text(
-                          (snapshot.data! as dynamic).docs[index]['username'],
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              (snapshot.data! as dynamic).docs[index]
+                                  ['photoUrl'],
+                            ),
+                          ),
+                          title: Text(
+                            (snapshot.data! as dynamic).docs[index]['username'],
+                          ),
                         ),
                       );
                     });
-              },),
+              },
+            )
           : FutureBuilder(
               future: FirebaseFirestore.instance.collection('posts').get(),
               builder: (context, snapshot) {
@@ -75,7 +88,28 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return const Text('Posts');
+                return GridView.builder(
+                    itemCount: (snapshot.data! as dynamic).docs.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 1.5,
+                      childAspectRatio: 1,
+                    ),
+                    itemBuilder: (builder, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: GridTile(
+                          child: Image(
+                              image: NetworkImage(
+                                (snapshot.data! as dynamic).docs[index]
+                                    ['postUrl'],
+                              ),
+                              fit: BoxFit.cover),
+                        ),
+                      );
+                    });
               }),
     );
   }
