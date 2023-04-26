@@ -66,7 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       );
                     });
-              })
+              },),
           : FutureBuilder(
               future: FirebaseFirestore.instance.collection('posts').get(),
               builder: (context, snapshot) {
