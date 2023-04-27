@@ -6,6 +6,7 @@ import 'package:minstagram/providers/user_provider.dart';
 import 'package:minstagram/resources/firestore_methods.dart';
 import 'package:minstagram/screens/comment_screen.dart';
 import 'package:minstagram/utils/colors.dart';
+import 'package:minstagram/utils/global_variables.dart';
 import 'package:minstagram/utils/utils.dart';
 import 'package:minstagram/widget/like_animation.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,12 @@ class _PostCardState extends State<PostCard> {
     final User user = Provider.of<UserProvider>(context).getUser;
 
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: MediaQuery.of(context).size.width > webScreenSize
+                ? secondaryColor
+                : mobileBackgroundColor),
+      ),
       color: mobileBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(

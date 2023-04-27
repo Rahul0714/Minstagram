@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:minstagram/resources/auth_methods.dart';
 import 'package:minstagram/screens/signup_screen.dart';
 import 'package:minstagram/utils/colors.dart';
+import 'package:minstagram/utils/global_variables.dart';
 import 'package:minstagram/widget/text_field.dart';
 
 import '../responsive/mobile_screen_layout.dart';
@@ -44,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
-      showSnackbar(context, "Something went Wrong!");
+      if (context.mounted) {
+        showSnackbar(context, "Something went Wrong!");
+      }
     }
     setState(() {
       _isLoading = false;
@@ -72,7 +75,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SafeArea(
                 child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
+              padding: MediaQuery.of(context).size.width > webScreenSize
+                  ? EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 3)
+                  : const EdgeInsets.symmetric(horizontal: 32),
               width: double.infinity,
               child: Column(
                 children: [
