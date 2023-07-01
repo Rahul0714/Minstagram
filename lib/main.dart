@@ -17,12 +17,12 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: "AIzaSyCvYu2vmw9McyD0RHE-kHgITzPow-vALMI",
-            authDomain: "minstagram-6b5ff.firebaseapp.com",
-            projectId: "minstagram-6b5ff",
-            storageBucket: "minstagram-6b5ff.appspot.com",
-            messagingSenderId: "1032587721085",
-            appId: "1:1032587721085:web:88d08cda0f266978b7f414"));
+            apiKey: "API_KEY",
+            authDomain: "AUTH_DOMAIN",
+            projectId: "PROJECT_ID",
+            storageBucket: "STORAGE_BUCKET",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"));
   } else {
     await Firebase.initializeApp();
   }
@@ -32,7 +32,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         //     webScreenLayout: WebScreenLayout(),
         //     mobileScreenLayout: MobileScreenLayout()),
         home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
+            stream: FirebaseAuth.instance.authStateChanges(),          
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 if (snapshot.hasData) {
